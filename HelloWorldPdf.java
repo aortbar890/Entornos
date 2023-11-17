@@ -1,28 +1,25 @@
 package es.iessoterohernandez.daw.endes.HelloWorldPdf;
 
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfPage;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
+import java.io.FileOutputStream;
 import java.io.FileNotFoundException;
 
 public class HelloWorldPdf {
-	public static void main(String[] args) {
-		try {
-			// Crear un nuevo documento PDF
-			PdfWriter writer = new PdfWriter("HelloWorld.pdf");
-			PdfDocument pdf = new PdfDocument(writer);
-			Document document = new Document(pdf);
+    public static void main(String[] args) {
+        Document document = new Document();
 
-			// Agregar un párrafo al documento
-			document.add(new Paragraph("¡Hola Mundo en PDF con iText!"));
-
-			// Cerrar el documento
-			document.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            PdfWriter.getInstance(document, new FileOutputStream("HelloWorld.pdf"));
+            document.open();
+            document.add(new Paragraph("Hola Mundo"));
+            document.close();
+            System.out.println("PDF generado correctamente.");
+        } catch (DocumentException | FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 }
